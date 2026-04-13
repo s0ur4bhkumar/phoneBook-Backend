@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "prisma generate && tsx index.ts",
-    "dev": "tsx --watch index.ts"
+    "dev": "tsx --watch index.ts",
+    "build:ui": "rm -rf dist && cd ../phoneBook-Frontend && npm build && cp -r dist ../phoneBook-Backend",
+    "deploy:full": "npm run build:ui && git add -A && git commit -m uibuild && git push"
   },
   "repository": {
     "type": "git",

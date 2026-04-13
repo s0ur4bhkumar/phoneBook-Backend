@@ -5,7 +5,7 @@ import services from "./services/script";
 const app = express();
 app.use(express.json());
 app.use(express.static("dist"));
-
+alert("app started");
 app.get("/", async (req, res) => {
   const contacts = await prisma.contacts.count();
   res.json(
