@@ -1,6 +1,6 @@
 import express from "express";
-import { prisma } from "./lib/prisma";
-import services from "./services/script";
+import { prisma } from "./lib/prisma.ts";
+import services from "./services/script.ts";
 
 const app = express();
 app.use(express.json());
