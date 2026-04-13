@@ -5,7 +5,14 @@ info:
 
 http:
   method: POST
-  url: http://localhost:3001/api/persons
+  url: http://localhost:3001/api/contacts
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Robert",
+        "contact": "24553-43556"
+      }
   auth: inherit
 
 settings:

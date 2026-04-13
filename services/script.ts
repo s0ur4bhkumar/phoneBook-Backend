@@ -30,6 +30,9 @@ async function createContact(contactObject: Contact) {
 }
 
 async function deleteContact(id: number) {
+  console.log(id);
+  console.log(typeof id);
+  
   await prisma.contacts.delete({
     where: { id: id },
   });
