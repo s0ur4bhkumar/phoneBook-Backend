@@ -32,7 +32,7 @@ async function createContact(contactObject: Contact) {
 async function deleteContact(id: number) {
   console.log(id);
   console.log(typeof id);
-  
+
   await prisma.contacts.delete({
     where: { id: id },
   });
@@ -45,4 +45,13 @@ async function getAll() {
   return contacts;
 }
 
+async function updateContact(id: number, contact: string) {
+  await prisma.contacts.update({
+    where: { id: id },
+    data: {
+      contact: contact,
+    },
+  });
+  return;
+}
 export default { createContact, deleteContact, getAll };
