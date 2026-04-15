@@ -23,16 +23,14 @@ async function main() {
 }
 
 async function createContact(contactObject: Contact) {
-  await prisma.contacts.create({
+  const newContact = await prisma.contacts.create({
     data: contactObject,
   });
+  console.log("the contact added", newContact);
   return;
 }
 
 async function deleteContact(id: number) {
-  console.log(id);
-  console.log(typeof id);
-
   await prisma.contacts.delete({
     where: { id: id },
   });
@@ -42,7 +40,6 @@ async function deleteContact(id: number) {
 
 async function getAll() {
   const contacts = await prisma.contacts.findMany();
-  console.log(contacts);
   return contacts;
 }
 

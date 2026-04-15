@@ -16,14 +16,12 @@ app.get("/", async (req, res) => {
 
 app.get("/api/contacts", async (req, res) => {
   const contacts = await services.getAll();
-  console.log(contacts);
   res.json(contacts);
 });
 
 app.post("/api/contacts", async (req, res) => {
   const contact = req.body;
   await services.createContact(contact);
-  console.log(contact);
   res.json(contact);
 });
 
