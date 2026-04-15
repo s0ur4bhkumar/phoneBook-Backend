@@ -36,6 +36,7 @@ async function deleteContact(id: number) {
   await prisma.contacts.delete({
     where: { id: id },
   });
+
   return;
 }
 
