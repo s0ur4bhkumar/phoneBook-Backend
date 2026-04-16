@@ -1,5 +1,5 @@
 info:
-  name: createPerson
+  name: createContact
   type: http
   seq: 5
 

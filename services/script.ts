@@ -5,6 +5,11 @@ type Contact = {
   contact: string;
 };
 
+type UpdateContactObject = {
+  id: number;
+  contact: string;
+};
+
 async function main() {
   const user = await prisma.contacts.createMany({
     data: [
@@ -43,13 +48,28 @@ async function getAll() {
   return contacts;
 }
 
-async function updateContact(id: number, contact: string) {
+async function getContact(id: number) {
+  const contact = await prisma.contacts.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  return contact;
+}
+
+async function updateContact(updateContactObject: UpdateContactObject) {
   await prisma.contacts.update({
-    where: { id: id },
+    where: { id: updateContactObject.id },
     data: {
-      contact: contact,
+      contact: updateContactObject.contact,
     },
   });
   return;
 }
-export default { createContact, deleteContact, getAll };
+export default {
+  createContact,
+  deleteContact,
+  getAll,
+  getContact,
+  updateContact,
+};

@@ -1,10 +1,27 @@
 import express from "express";
 import { prisma } from "./lib/prisma";
 import services from "./services/script";
+import morgan from "morgan";
 
 const app = express();
 app.use(express.json());
 app.use(express.static("dist"));
+app.use(morgan("tiny"));
+const errorHandler = (
+  error: any,
+  request: any,
+  response: any,
+  next: (err: any) => void,
+) => {
+  console.error(error.message);
+  if (error.name === "CastError") {
+    return response.status(400).send({
+      error: "malformed id",
+    });
+  }
+  next(error);
+};
+
 app.get("/", async (req, res) => {
   const contacts = await prisma.contacts.count();
   res.json(
@@ -31,9 +48,28 @@ app.delete("/api/contacts/:id", async (req, res) => {
   return res.status(204);
 });
 
-// app.put("/api/contacts/:id", async (req, res) => {
-//   const body = req.body
-// })
+app.get("/api/contacts/:id", async (req, res, next) => {
+  const id = req.params.id;
+  await services
+    .getContact(parseInt(id))
+    .then((contact) => {
+      if (contact) {
+        res.json(contact);
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((Error) => next(Error));
+});
+
+app.put("/api/contacts", async (req, res, next) => {
+  const body = req.body;
+  await services.updateContact(body);
+  const contacts = await services.getAll();
+  res.json(contacts);
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

@@ -1,11 +1,11 @@
 info:
-  name: getPersons
+  name: deleteContact
   type: http
-  seq: 2
+  seq: 4
 
 http:
   method: GET
-  url: http://localhost:3001/api/persons
+  url: ""
   auth: inherit
 
 settings:
